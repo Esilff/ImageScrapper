@@ -25,5 +25,6 @@ To use the script, you can do the following :
 
 **Optional parameters :**
 
-``--headless`` is used to enable headless mode during the script execution (for selenium)
-    
+``--headless`` is used to enable headless mode during the script execution (for selenium) <br>
+```--log_urls``` is used to enable the logging of the scrapped urls (base64 images can be quite long)
+
