@@ -3,7 +3,7 @@ ImageScrapper is part of a school project that requires images in order to
 test various types of machine learning algorithms. 
 <br> It was required from us to build our own dataset and this script serves this purpose.
 
-It's goal is to download a set of images in a given path by using a search key to query images
+The goal is to download a set of images in a given path by using a search key to query images
 on Google Image.
 
 ## Requirements
