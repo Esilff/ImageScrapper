@@ -7,9 +7,10 @@ parser.add_argument("--search_keyword", type=str, required=True, help="The keywo
 parser.add_argument("--dir_path", type=str, required=True, help="The path to the directory where images will be downloaded")
 parser.add_argument("--num_images", '-n', type=int, required=True, help="The maximum number of images that")
 parser.add_argument("--headless", action='store_true', help="Run in headless mode")
+parser.add_argument("--log_urls", action='store_true', help="Log all the scrapped urls")
 args = parser.parse_args()
 
-scrapper = ImageScrapper(headless=args.headless)
+scrapper = ImageScrapper(headless=args.headless, logUrls=args.log_urls)
 scrapper.find_urls(args.search_keyword, args.num_images)
 scrapper.download_images(args.dir_path)
 scrapper.destroy()

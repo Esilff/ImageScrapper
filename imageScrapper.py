@@ -16,8 +16,9 @@ class ImageScrapper:
     base64_urls = []  # Required to download the first images since those are represented as base64 jpeg data
     encrypted_urls = []  # Remaining urls follow the https protocol
     headless: bool
+    logUrls: bool
 
-    def __init__(self, headless: bool):
+    def __init__(self, headless: bool, logUrls: bool):
         try:
             options = Options()
             if headless:
@@ -30,6 +31,7 @@ class ImageScrapper:
             exit(f"An error occured during the scrapper initialization : {e}")
         self.driver = driver
         self.headless = headless
+        self.logUrls = logUrls
 
     def find_urls(self, search_key, image_count):
         print(f"[INFO] : Searching for images using the keyword : {search_key}")
@@ -73,7 +75,8 @@ class ImageScrapper:
                     except Exception:
                         indx_1 = indx_1 + 1
             if img_url is not None:
-                print("Image url : ", img_url.get_attribute("src"))
+                if self.logUrls:
+                    print("Image url : ", img_url.get_attribute("src"))
                 img_src = img_url.get_attribute("src")
                 if "data:image/jpeg;base64," in img_src and img_src not in self.base64_urls:
 
@@ -110,19 +113,6 @@ class ImageScrapper:
                     for chunk in response.iter_content(1024):
                         file.write(chunk)
                 image_count += 1
-
-    def connect(self):
-        try:
-            options = Options()
-            if self.headless:
-                options.add_argument('--headless')
-            driver = webdriver.Chrome(chrome_options=options)
-            driver.set_window_size(1400, 1050)
-            driver.get("https://www.google.com")
-            WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.ID, "W0wltc"))).click()
-        except Exception as e:
-            exit(f"An error occured during the scrapper initialization : {e}")
-        self.driver = driver
 
     def destroy(self):
         self.driver.quit()
